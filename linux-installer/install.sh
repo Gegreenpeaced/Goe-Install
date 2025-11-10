@@ -43,9 +43,6 @@ fi
 echo "Setting Home User Path Variable..."
 realHomePath=$HOME
 
-echo $realHomePath
-exit 1
-
 ### Fresh Install (if necessary) of Utils without java
 # Installing all other nesessary packages
 echo "Installing all nesessary packages..."
