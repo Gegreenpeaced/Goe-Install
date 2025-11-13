@@ -68,7 +68,6 @@ set_UserCred() {
 
     until [ $exitBool = "true" ]
     do
-    echo "test"
     # Declaring functions
     credUsername=""
     credPass=""
@@ -139,7 +138,6 @@ fi
 echo "test"
 # Ask for installed DE
 stdDE=$(select_DE)
-echo $stdDE
 
 ## User Startup
 # Check what DE is installed and if not installed then install appropriate dialog service
@@ -170,3 +168,71 @@ esac
 set_UserCred
 
 # Ask what they want to do
+# Start Main Menu
+    # Prepare while loop
+    exitBool=false
+
+    # Java Version
+    VERSIONBYPAPERCUT="25-zulu"
+
+    until [ $exitBool = "true" ]
+    do
+        # Declare Bools
+        secondExitBool="false"
+        # Check DE
+        case $stdDE in
+        # Dialog for GNOME
+            "GNOME")
+                returnDialog=$(zenity --list --title="Main Menu" --text="Choose what you want to do." --column="Options" "Papercut (Printers)" "Eduroam (Wifi)" "eduVPN (VPN)" "Debug Options")
+        
+                # Papercut Dialog
+                if [ $returnDialog = "Papercut (Printers)" ]; then
+                until [ $secondExitBool = "true" ]
+                do
+                    # Result Setting
+                    retunSecondDialog=$(zenity --list --title="Papercut Menu" --text="Choose what you want to do." --column="Options" "Install Printers" "Remove all Printers")
+                
+                done
+
+                # Eduroam Dialog
+                if [ $returnDialog = "Eduroam (Wifi)" ]; then
+                until [ $secondExitBool = "true" ]
+                do
+                    # Result Setting
+                    retunSecondDialog=$(zenity --list --title="Eduroam Menu" --text="Choose what you want to do." --column="Options" "Install Eduroam" "Remove Eduroam")
+                
+                done
+
+                # eduVPN Dialog
+                if [ $returnDialog = "eduVPN (VPN)" ]; then
+                until [ $secondExitBool = "true" ]
+                do
+                    # Result Setting
+                    retunSecondDialog=$(zenity --list --title="eduVPN Menu" --text="Choose what you want to do." --column="Options" "Install eduVPN" "Remove eduVPN")
+                
+                done
+
+                # Debug Options
+                if [ $returnDialog = "Debug Options" ]; then
+                until [ $secondExitBool = "true" ]
+                do
+                    # Result Setting DO NOT FORGET TO SET JAVA VERSION
+                    retunSecondDialog=$(zenity --list --title="Debug Menu" --text="Choose what you want to do." --column="Options" --width=400 --height=400 "Reinstall Printers" "Reconfigure Eduroam" "Reinstall eduVPN" "Remove Java $VERSIONBYPAPERCUT" "Remove SDKMAN" "Update Packagelist")
+                
+                done
+
+                # Stay false
+                else
+                $exitBool = "false"
+                fi
+            ;;
+            # Dialog for KDE
+            "KDE")
+
+            ;;
+            # Dialog if N/A
+            "N/A")
+
+            ;;
+        esac
+    done
