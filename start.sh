@@ -11,21 +11,21 @@ get_Packagemanager() {
     if command -v apt > /dev/null 2>&1; then
     echo "Package Manager is 'apt'! Refreshing Package Sources..."
     sudo apt update
-    return "apt"
+    echo "apt"
     bashProfileName=.profile
     elif command -v dnf > /dev/null 2>&1; then
     echo "Package Manager is 'dnf'..."
     bashProfileName=.bash_profile
-    return "dnf"
+    echo "dnf"
     elif command -v yum > /dev/null 2>&1; then
     echo "Package Manager is 'yum'..."
-    return "yum"
+    echo "yum"
     elif command -v zypper > /dev/null 2>&1; then
     echo "Package Manager is 'zypper'..."
-    return "zypper"
+    echo "zypper"
     elif command -v pacman > /dev/null 2>&1; then
     echo "Package Manager is 'pacman'..."
-    return "pacman"
+    echo "pacman"
     else
     echo "No Package Manager found... Aborting!"
     exit -1
@@ -35,7 +35,7 @@ get_Packagemanager() {
 # Get Homepath
 get_Homepath () {
     cd ~/Home
-    return $HOME
+    echo $HOME
 }
 # Install Package
 install_package() {
@@ -44,21 +44,31 @@ install_package() {
 }
 # Select Desktop Enviroment
 select_DE() {
-    whiptail --title "Setup: Desktop Enviroment" --radiolist \
+    returnDE=$(whiptail --title "Setup: Desktop Enviroment" --radiolist \
     "Please select (SPACE) your Desktop Enviroment and confirm with (OK)" 20 82 4 \
     "GNOME" "GNOME, Standard Desktop Enviroment know for simplicity" OFF \
     "KDE" "KDE Plasma, Desktop Enviroment know for its costumeisabilty" OFF \
-    "N/A" "Other Desktop Enviroments oder Unknown" ON
+    "N/A" "Other Desktop Enviroments oder Unknown" ON 3>&1 1>&2 2>&3)
+    exitstatus=$?
+    # Check correct answer
+    if [ $exitstatus == 0 ]; then
+        echo $returnDE
+    else
+    # Error
+        echo "User selected Cancel."
+        exit 0
+    fi
 }
 
 ## User specific functions
 # Set User Credentials
 set_UserCred() {
     # Prepare while loop
-    exitBool=0
+    exitBool=false
 
-    while [ ! $exitBool ]
+    until [ $exitBool = "true" ]
     do
+    echo "test"
     # Declaring functions
     credUsername=""
     credPass=""
@@ -71,7 +81,7 @@ set_UserCred() {
     # Set correct Dialog to DE
     case $stdDE in
     "GNOME")
-        credDialogString=credentialString=$(zenity --forms --title="User Setup: Credentials" --text="Please enter the credentials to your university account!" --add-entry=Username --add-password=Password --add-list=Domaine --list-values=$credMenuDomaineString)
+        credDialogString=$(zenity --forms --title="User Setup: Credentials" --text="Please enter the credentials to your university account!" --add-entry=Username --add-password=Password --add-list=Domaine --list-values=$credMenuDomaineString)
     ;;
     "KDE")
         echo "Unsupported"
@@ -85,18 +95,18 @@ set_UserCred() {
 
     # Recieve Credentials
     # Split the result string by "|"
-    readarray -d "|" -t credarr <<< "$credentialString"
+    readarray -d "|" -t credarr <<< "$credDialogString"
 
     # Test if array fiels are empty
-    if [ ! {$credarr[0]} = "" || ! {$credarr[1] = "" } || ! {$credarr[2]} = "" ]; then
+    if [ ! ${credarr[0]} = "" ] || [ ! ${credarr[1]} = "" ] || [ ! ${credarr[2]} = "" ]; then
 
     # Set User Credentials
-    credUsername={$credarr[0]}
-    credPass={$credarr[1]}
-    credDomaine={$credarr[2]}
+    credUsername=${credarr[0]}
+    credPass=${credarr[1]}
+    credDomaine=${credarr[2]}
 
     # Set Value to escape while Loop
-    exitBool=1
+    exitBool=true
 
     # If on is empty, ask if they want to retry
     else
@@ -115,10 +125,10 @@ set_UserCred() {
 ### Startup
 ## System Startup
 # Set Packagemanager
-packMan=get_Packagemanager
+packMan=$(get_Packagemanager)
 
 # Set Homepath
-realHP=get_Homepath
+realHP=$(get_Homepath)
 
 # Testing if whiptail dialog is installed
 if [ ! $(which whiptail) = "/usr/bin/whiptail" ]; then
@@ -126,9 +136,10 @@ install_package "whiptail"
 else
 echo "Whiptail installed"
 fi
-
+echo "test"
 # Ask for installed DE
-stdDE=select_DE
+stdDE=$(select_DE)
+echo $stdDE
 
 ## User Startup
 # Check what DE is installed and if not installed then install appropriate dialog service
@@ -159,3 +170,4 @@ esac
 set_UserCred
 
 # Ask what they want to do
+read -p "Wait"
