@@ -170,4 +170,3 @@ esac
 set_UserCred
 
 # Ask what they want to do
-read -p "Wait"
