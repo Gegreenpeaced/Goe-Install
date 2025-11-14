@@ -256,7 +256,18 @@ set_UserCred
                         until [ $secondExitBool = "true" ]
                         do
                             # Result Setting
-                            retunSecondDialog=$(window_SecondPapercut_GNOME)
+                            returnSecondDialog=$(window_SecondPapercut_GNOME)
+
+                            # Test Result
+                            if [ $returnSecondDialog = "Install Printers"]; then
+                            install_Papercut
+                            secondExitBool = "true"
+                            if [ $returnSecondDialog = "Remove all Printers" ]; then
+                            remove_Papercut
+                            secondExitBool = "true"
+                            fi
+
+                            ## Action for ESC is needed
                         done
                     ;;
 
@@ -264,7 +275,7 @@ set_UserCred
                         until [ $secondExitBool = "true" ]
                         do
                             # Result Setting
-                            retunSecondDialog=$(window_SecondEduroam_GNOME)
+                            returnSecondDialog=$(window_SecondEduroam_GNOME)
                         done
                     ;;
 
@@ -272,7 +283,7 @@ set_UserCred
                         until [ $secondExitBool = "true" ]
                         do
                             # Result Setting
-                            retunSecondDialog=$(window_SecondEduVPN_GNOME)
+                            returnSecondDialog=$(window_SecondEduVPN_GNOME)
                         done
                     ;;
 
@@ -280,7 +291,7 @@ set_UserCred
                         until [ $secondExitBool = "true" ]
                         do
                             # Result Setting DO NOT FORGET TO SET JAVA VERSION
-                            retunSecondDialog=$(window_SecondDebug_GNOME)
+                            returnSecondDialog=$(window_SecondDebug_GNOME)
                         done
                     ;;
 
