@@ -119,6 +119,70 @@ set_UserCred() {
     done
 }
 
+### Main Dialogs
+## Main Dialogs
+# Gnome Dialog
+window_Main_GNOME() {
+    zenity --list --title="Main Menu" --text="Choose what you want to do."
+    --column="Options" "Papercut (Printers)" "Eduroam (Wifi)" "eduVPN (VPN)" "Debug Options"
+}
+
+# KDE Dialog
+window_Main_KDE() {
+
+}
+
+# Whiptail Dialog
+window_Main_Whiptail() {
+
+}
+
+
+### Second Main Dialog
+## Papercut Dialog
+# Gnome Dialog
+window_SecondPapercut_GNOME() {
+    zenity --list --title="Papercut Menu" --text="Choose what you want to do."
+    --column="Options" "Install Printers" "Remove all Printers"
+}
+
+# KDE Dialog
+
+# Whiptail Dialog
+
+
+## Eduroam Dialog
+# Gnome Dialog
+window_SecondEduroam_GNOME() {
+    zenity --list --title="Eduroam Menu" --text="Choose what you want to do."
+    --column="Options" "Install Eduroam" "Remove Eduroam"
+}
+
+# KDE Dialog
+
+# Whiptail Dialog
+
+
+## eduVPN Dialog
+# Gnome
+window_SecondEduVPN_GNOME() {
+    zenity --list --title="eduVPN Menu" --text="Choose what you want to do."
+    --column="Options" "Install eduVPN" "Remove eduVPN"                
+}
+
+# KDE Dialog
+
+# Whiptail Dialog
+
+
+## Debug Dialog
+# Gnome
+window_SecondDebug_GNOME() {
+    zenity --list --title="Debug Menu" --text="Choose what you want to do." --column="Options"
+    --width=400 --height=400 "Reinstall Printers" "Reconfigure Eduroam" "Reinstall eduVPN"
+    "Remove Java $VERSIONBYPAPERCUT" "Remove SDKMAN" "Update Packagelist"                
+}
+
 
 
 ### Startup
@@ -183,48 +247,48 @@ set_UserCred
         case $stdDE in
         # Dialog for GNOME
             "GNOME")
-                returnDialog=$(zenity --list --title="Main Menu" --text="Choose what you want to do." --column="Options" "Papercut (Printers)" "Eduroam (Wifi)" "eduVPN (VPN)" "Debug Options")
-        
-                # Papercut Dialog
-                if [ $returnDialog = "Papercut (Printers)" ]; then
-                until [ $secondExitBool = "true" ]
-                do
-                    # Result Setting
-                    retunSecondDialog=$(zenity --list --title="Papercut Menu" --text="Choose what you want to do." --column="Options" "Install Printers" "Remove all Printers")
-                
-                done
+                returnDialog=$(window_Main_GNOME)
 
-                # Eduroam Dialog
-                if [ $returnDialog = "Eduroam (Wifi)" ]; then
-                until [ $secondExitBool = "true" ]
-                do
-                    # Result Setting
-                    retunSecondDialog=$(zenity --list --title="Eduroam Menu" --text="Choose what you want to do." --column="Options" "Install Eduroam" "Remove Eduroam")
-                
-                done
+                # Dialog Reutrn
+                case $returnDialog in 
 
-                # eduVPN Dialog
-                if [ $returnDialog = "eduVPN (VPN)" ]; then
-                until [ $secondExitBool = "true" ]
-                do
-                    # Result Setting
-                    retunSecondDialog=$(zenity --list --title="eduVPN Menu" --text="Choose what you want to do." --column="Options" "Install eduVPN" "Remove eduVPN")
-                
-                done
+                    "Papercut (Printers)")
+                        until [ $secondExitBool = "true" ]
+                        do
+                            # Result Setting
+                            retunSecondDialog=$(window_SecondPapercut_GNOME)
+                        done
+                    ;;
 
-                # Debug Options
-                if [ $returnDialog = "Debug Options" ]; then
-                until [ $secondExitBool = "true" ]
-                do
-                    # Result Setting DO NOT FORGET TO SET JAVA VERSION
-                    retunSecondDialog=$(zenity --list --title="Debug Menu" --text="Choose what you want to do." --column="Options" --width=400 --height=400 "Reinstall Printers" "Reconfigure Eduroam" "Reinstall eduVPN" "Remove Java $VERSIONBYPAPERCUT" "Remove SDKMAN" "Update Packagelist")
-                
-                done
+                    "Eduroam (Wifi)")
+                        until [ $secondExitBool = "true" ]
+                        do
+                            # Result Setting
+                            retunSecondDialog=$(window_SecondEduroam_GNOME)
+                        done
+                    ;;
 
-                # Stay false
-                else
-                $exitBool = "false"
-                fi
+                    "eduVPN (VPN)")
+                        until [ $secondExitBool = "true" ]
+                        do
+                            # Result Setting
+                            retunSecondDialog=$(window_SecondEduVPN_GNOME)
+                        done
+                    ;;
+
+                    "Debug Options")
+                        until [ $secondExitBool = "true" ]
+                        do
+                            # Result Setting DO NOT FORGET TO SET JAVA VERSION
+                            retunSecondDialog=$(window_SecondDebug_GNOME)
+                        done
+                    ;;
+
+                    "*")
+                        # Stay false
+                        $exitBool = "false"
+                    ;;
+                    esac
             ;;
             # Dialog for KDE
             "KDE")
