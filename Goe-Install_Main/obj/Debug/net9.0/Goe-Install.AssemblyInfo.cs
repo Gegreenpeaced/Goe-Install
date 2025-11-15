@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Goe-Install")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+81b9c9742944a19b576d26bb951df98776005d34")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f7018ee92f78b1822691de0ec44e17d536b003f1")]
 [assembly: System.Reflection.AssemblyProductAttribute("Goe-Install")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Goe-Install")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

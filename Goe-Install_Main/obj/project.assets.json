@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/juliusreiter/Dokumente/Privat/Programmierung/Goe-Install/Goe-Install/Goe-Install_C#/Goe-Install.csproj",
+      "projectUniqueName": "/home/juliusreiter/Dokumente/Privat/Programmierung/Goe-Install/Goe-Install_Main/Goe-Install.csproj",
       "projectName": "Goe-Install",
-      "projectPath": "/home/juliusreiter/Dokumente/Privat/Programmierung/Goe-Install/Goe-Install/Goe-Install_C#/Goe-Install.csproj",
+      "projectPath": "/home/juliusreiter/Dokumente/Privat/Programmierung/Goe-Install/Goe-Install_Main/Goe-Install.csproj",
       "packagesPath": "/home/juliusreiter/.nuget/packages/",
-      "outputPath": "/home/juliusreiter/Dokumente/Privat/Programmierung/Goe-Install/Goe-Install/Goe-Install_C#/obj/",
+      "outputPath": "/home/juliusreiter/Dokumente/Privat/Programmierung/Goe-Install/Goe-Install_Main/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/juliusreiter/.nuget/NuGet/NuGet.Config"
@@ -66,7 +66,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/9.0.109/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/9.0.111/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
